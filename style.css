@@ -1,0 +1,96 @@
+/* General styling */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #0a0a12;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: linear-gradient(135deg, #000000, #0a1a3a);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+}
+
+header p {
+  color: #8ab4f8;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #8ab4f8;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #00c4ff;
+}
+
+/* Sections */
+section {
+  padding: 2.5rem 1.5rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+section h2 {
+  color: #00c4ff;
+  border-bottom: 2px solid #00c4ff;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* Projects */
+.project {
+  background-color: #111827;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.project h3 {
+  margin-top: 0;
+  color: #8ab4f8;
+}
+
+/* Contact */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 0.5rem 0;
+}
+
+ul a {
+  color: #00c4ff;
+  text-decoration: none;
+}
+
+ul a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #000814;
+  color: #888;
+  font-size: 0.9rem;
+}
