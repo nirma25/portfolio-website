@@ -1,638 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nirma AB</title>
-  <link rel="icon" type="image/png" href="image.png">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0a0a0a;
-      color: #e0e0e0;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(0, 78, 146, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 4, 40, 0.15) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: #4a9eff;
-      border-radius: 50%;
-      animation: twinkle 3s infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    header {
-      background: linear-gradient(135deg, #000428 0%, #004e92 100%);
-      padding: 100px 20px 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 30px rgba(0, 78, 146, 0.5);
-      z-index: 1;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shine 3s infinite;
-    }
-
-    @keyframes shine {
-      0% { left: -100%; }
-      50%, 100% { left: 100%; }
-    }
-
-    .avatar-container {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 30px;
-      position: relative;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-    }
-
-    .avatar-border {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid #4a9eff;
-      box-shadow: 0 0 30px rgba(74, 158, 255, 0.6), inset 0 0 30px rgba(74, 158, 255, 0.3);
-      animation: rotate 10s linear infinite;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .avatar-border::before {
-      content: '';
-      position: absolute;
-      top: -4px;
-      left: 50%;
-      width: 8px;
-      height: 8px;
-      background: #4a9eff;
-      border-radius: 50%;
-      box-shadow: 0 0 20px #4a9eff;
-      transform: translateX(-50%);
-    }
-
-    .avatar {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .face {
-      width: 140px;
-      height: 160px;
-      background: linear-gradient(180deg, #004e92 0%, #0077be 100%);
-      border-radius: 50% 50% 45% 45%;
-      position: relative;
-      box-shadow: inset 0 -20px 40px rgba(0, 0, 0, 0.3);
-      animation: facePulse 2s ease-in-out infinite;
-    }
-
-    @keyframes facePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    .hair {
-      position: absolute;
-      top: -15px;
-      left: 10%;
-      width: 80%;
-      height: 60px;
-      background: #001a33;
-      border-radius: 50% 50% 0 0;
-      box-shadow: 0 -5px 20px rgba(0, 26, 51, 0.8);
-    }
-
-    .eyes {
-      position: absolute;
-      top: 55px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .eye {
-      width: 24px;
-      height: 28px;
-      background: white;
-      border-radius: 50% 50% 50% 50%;
-      position: relative;
-      animation: blink 4s infinite;
-    }
-
-    @keyframes blink {
-      0%, 96%, 100% { height: 28px; }
-      98% { height: 2px; }
-    }
-
-    .pupil {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: #001a33;
-      border-radius: 50%;
-      top: 8px;
-      left: 6px;
-      animation: lookAround 8s infinite;
-    }
-
-    @keyframes lookAround {
-      0%, 20%, 100% { transform: translate(0, 0); }
-      25%, 45% { transform: translate(3px, 0); }
-      50%, 70% { transform: translate(-3px, 0); }
-      75%, 95% { transform: translate(0, 2px); }
-    }
-
-    .pupil::after {
-      content: '';
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      top: 2px;
-      left: 2px;
-    }
-
-    .nose {
-      position: absolute;
-      top: 85px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 12px solid rgba(0, 78, 146, 0.5);
-    }
-
-    .mouth {
-      position: absolute;
-      top: 110px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 20px;
-      border: 3px solid #001a33;
-      border-top: none;
-      border-radius: 0 0 40px 40px;
-      animation: smile 3s ease-in-out infinite;
-    }
-
-    @keyframes smile {
-      0%, 100% { width: 40px; height: 20px; }
-      50% { width: 50px; height: 25px; }
-    }
-
-    header h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      color: #ffffff;
-      animation: fadeInDown 1s ease;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 158, 255, 0.4);
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    header p {
-      font-size: 1.3em;
-      color: #b8daff;
-      margin-bottom: 30px;
-      animation: fadeInUp 1s ease 0.3s both;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      animation: fadeIn 1s ease 0.6s both;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    nav a {
-      color: #ffffff;
-      text-decoration: none;
-      padding: 12px 28px;
-      background: rgba(0, 78, 146, 0.5);
-      border-radius: 25px;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    nav a::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    nav a:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    nav a:hover {
-      background: rgba(0, 78, 146, 0.8);
-      border-color: #4a9eff;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(74, 158, 255, 0.4);
-    }
-
-    section {
-      max-width: 900px;
-      margin: 60px auto;
-      padding: 40px 30px;
-      background: rgba(26, 26, 46, 0.9);
-      border-radius: 15px;
-      box-shadow: 0 8px 32px rgba(0, 78, 146, 0.3);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(74, 158, 255, 0.2);
-      animation: slideInUp 0.8s ease;
-      transition: transform 0.3s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(0, 78, 146, 0.5);
-    }
-
-    h2 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-      color: #4a9eff;
-      border-bottom: 3px solid #004e92;
-      padding-bottom: 10px;
-      position: relative;
-      display: inline-block;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 0;
-      height: 3px;
-      background: #4a9eff;
-      transition: width 0.5s ease;
-      box-shadow: 0 0 10px #4a9eff;
-    }
-
-    section:hover h2::after {
-      width: 100%;
-    }
-
-    .project {
-      background: rgba(0, 4, 40, 0.6);
-      padding: 25px;
-      margin: 20px 0;
-      border-radius: 10px;
-      border-left: 4px solid #004e92;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(74, 158, 255, 0.15), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .project:hover::before {
-      left: 100%;
-    }
-
-    .project:hover {
-      transform: translateX(10px);
-      border-left-color: #4a9eff;
-      box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
-      background: rgba(0, 4, 40, 0.8);
-    }
-
-    .project h3 {
-      color: #4a9eff;
-      margin-bottom: 10px;
-      font-size: 1.5em;
-    }
-
-    #contact ul {
-      list-style: none;
-      padding: 20px 0;
-    }
-
-    #contact li {
-      margin: 15px 0;
-      padding-left: 30px;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-
-    #contact li:hover {
-      transform: translateX(10px);
-    }
-
-    #contact li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: #4a9eff;
-      font-size: 1.2em;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    #contact a {
-      color: #4a9eff;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    #contact a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #4a9eff;
-      transition: width 0.3s ease;
-      box-shadow: 0 0 5px #4a9eff;
-    }
-
-    #contact a:hover::after {
-      width: 100%;
-    }
-
-    #contact a:hover {
-      color: #6bb3ff;
-      text-shadow: 0 0 10px rgba(74, 158, 255, 0.6);
-    }
-
-    footer {
-      background: #000000;
-      color: #888;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 60px;
-      border-top: 2px solid #004e92;
-      animation: fadeIn 1s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer p {
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .avatar-container {
-        width: 140px;
-        height: 140px;
-      }
-
-      .face {
-        width: 110px;
-        height: 125px;
-      }
-
-      header h1 {
-        font-size: 2em;
-      }
-
-      nav {
-        gap: 15px;
-      }
-
-      nav a {
-        padding: 10px 20px;
-        font-size: 0.9em;
-      }
-
-      section {
-        margin: 30px 20px;
-        padding: 25px 20px;
-      }
-
-      h2 {
-        font-size: 1.8em;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="stars" id="stars"></div>
-
-  <header>
-    <div class="avatar-container">
-      <div class="avatar-border"></div>
-      <div class="avatar">
-        <div class="face">
-          <div class="hair"></div>
-          <div class="eyes">
-            <div class="eye">
-              <div class="pupil"></div>
-            </div>
-            <div class="eye">
-              <div class="pupil"></div>
-            </div>
-          </div>
-          <div class="nose"></div>
-          <div class="mouth"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nirma AB</title>
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🤖</text></svg>"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <nav class="navbar">
+      <div class="logo">nirmaab<span>.com</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="btn-primary">Contact Me</a></li>
+      </ul>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-content">
+        <div class="badge">Computer Science Student</div>
+        <h1>Hello, I'm <span class="gradient-text">Nirma</span></h1>
+        <h2 class="typing-text">I build <span id="typewriter"></span></h2>
+        <p>
+          Passionate about crafting scalable web applications and exploring the
+          frontiers of technology.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#projects" class="btn-primary">View My Work</a>
+          <a
+            href="https://github.com/nirma25"
+            target="_blank"
+            class="btn-secondary"
+            ><i class="fab fa-github"></i> GitHub</a
+          >
         </div>
       </div>
-    </div>
-    <h1>Nirma Abhayawardhana</h1>
-    <p>Computer Science Student</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      Hi, I'm Nirma — a passionate Computer Science student with a strong interest in technology, programming, and web
-      development.
-      I love building creative projects and learning new tools to improve my skills.
-    </p>
-  </section>
+      <div class="hero-visual">
+        <div class="glass-card float-anim">
+          <i class="fas fa-code code-icon"></i>
+          <div class="code-snippet">
+            <span>const dev = {</span>
+            <span>&nbsp;&nbsp;name: 'Nirma',</span>
+            <span>&nbsp;&nbsp;passion: 'Coding'</span>
+            <span>};</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project">
-      <h3>Personal Portfolio</h3>
-      <p>This website is my first step toward showcasing my skills and journey in tech.</p>
-    </div>
-    <div class="project">
-    <h3>Student Management System</h3>
-    <p>A full-stack app with React frontend and FastAPI backend, deployed online. Users can add, update, and delete student records in real time.</p>
-    <p>🔗 <a href="https://nirma25.github.io/std-manage-frontend/" target="_blank">Live Demo</a></p>
-    </div>
-    <div class="project">
-      <h3>Future Projects</h3>
-      <p>More projects will be added soon — stay tuned!</p>
-    </div>
-  </section>
+    <section id="skills" class="section">
+      <h2 class="section-title">
+        My <span class="gradient-text">Tech Stack</span>
+      </h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <i class="fab fa-python"></i>
+          <h3>Python</h3>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-react"></i>
+          <h3>React</h3>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-database"></i>
+          <h3>SQL / DB</h3>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-js"></i>
+          <h3>JavaScript</h3>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-server"></i>
+          <h3>FastAPI</h3>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-git-alt"></i>
+          <h3>Git</h3>
+        </div>
+      </div>
+    </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Let's connect! Feel free to reach out:</p>
-    <ul>
-      <li>Email: 
-        <a href="mailto:nirmaab025@gmail.com">
-          nirmaab025@gmail.com
-        </a>
-      </li>
-      <li>GitHub: 
-        <a href="https://github.com/nirma25" target="_blank">
-          github.com/nirma
-        </a>
-      </li>
-      <li>LinkedIn: 
-        <a href="https://lk.linkedin.com/in/nirma-abhayawardhana-447924368" target="_blank">
-          linkedin.com/in/nirma
-        </a>
-      </li>
-    </ul>
-  </section>
+    <section id="projects" class="section">
+      <h2 class="section-title">
+        Featured <span class="gradient-text">Projects</span>
+      </h2>
 
-  <footer>
-    <p>© 2025 Nirma Abhayawardhana. All rights reserved.</p>
-  </footer>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="card-content">
+            <div class="card-header">
+              <i class="fas fa-user-graduate icon"></i>
+              <div class="links">
+                <a
+                  href="https://nirma25.github.io/std-manage-frontend/"
+                  target="_blank"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+              </div>
+            </div>
+            <h3>Student Management System</h3>
+            <p>
+              A full-stack application facilitating real-time student record
+              management. Built with robust REST APIs.
+            </p>
+            <div class="tags">
+              <span>React</span>
+              <span>FastAPI</span>
+            </div>
+          </div>
+        </div>
 
-  <script>
-    // Create animated stars in the background
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 50; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      starsContainer.appendChild(star);
-    }
-  </script>
-</body>
+        <div class="project-card">
+          <div class="card-content">
+            <div class="card-header">
+              <i class="fas fa-laptop-code icon"></i>
+            </div>
+            <h3>Personal Portfolio</h3>
+            <p>
+              The high-performance website you are looking at right now.
+              Designed with glassmorphism and modern CSS.
+            </p>
+            <div class="tags">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card coming-soon">
+          <div class="card-content">
+            <div class="card-header">
+              <i class="fas fa-rocket icon"></i>
+            </div>
+            <h3>Upcoming Project</h3>
+            <p>
+              Currently working on an exciting AI-based tool. Stay tuned for
+              updates!
+            </p>
+            <div class="tags">
+              <span>AI</span>
+              <span>Python</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="contact-container glass-card">
+        <h2 class="section-title">
+          Let's <span class="gradient-text">Connect</span>
+        </h2>
+        <p>
+          I'm currently looking for internships and new opportunities. Whether
+          you have a question or just want to say hi, my inbox is always open!
+        </p>
+
+        <div class="social-links">
+          <a href="mailto:nirmaab025@gmail.com" class="social-btn">
+            <i class="fas fa-envelope"></i> Email Me
+          </a>
+          <a
+            href="https://lk.linkedin.com/in/nirma-abhayawardhana-447924368"
+            target="_blank"
+            class="social-btn"
+          >
+            <i class="fab fa-linkedin-in"></i> LinkedIn
+          </a>
+          <a
+            href="https://github.com/nirma25"
+            target="_blank"
+            class="social-btn"
+          >
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Designed & Built by
+        <span class="gradient-text">Nirma Abhayawardhana</span> © 2025
+      </p>
+    </footer>
+
+    <script>
+      // Typing Effect
+      const textElement = document.getElementById("typewriter");
+      const phrases = ["Web Applications.", "Solutions.", "the Future."];
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+          textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(type, 2000); // Pause at end
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(type, 500);
+        } else {
+          setTimeout(type, isDeleting ? 100 : 200);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", type);
+
+      // Mobile Menu Toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Close menu when clicking a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
 </html>
-
-
